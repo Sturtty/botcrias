@@ -1,23 +1,25 @@
-const mineflayer = require('mineflayer');
+const { createClient } = require('bedrock-protocol');
 
 function startBot() {
-  const bot = mineflayer.createBot({
+  const client = createClient({
     host: 'criassever2025.aternos.me',
     port: 29283,
     username: 'BotCrias',
     version: '1.21.93'
   });
 
-  bot.on('login', () => {
-    console.log('✅ BotCrias entrou no servidor!');
+  client.on('join', () => {
+    console.log('✅ BotCrias entrou no servidor Bedrock!');
   });
 
-  bot.on('end', () => {
-    console.log('⛔ Bot caiu. Reconectando...');
+  client.on('disconnect', () => {
+    console.log('⛔ BotCrias foi desconectado. Reconectando...');
     setTimeout(startBot, 5000);
   });
 
-  bot.on('error', err => console.log('Erro:', err));
+  client.on('error', (err) => {
+    console.error('Erro:', err);
+  });
 }
 
 startBot();
